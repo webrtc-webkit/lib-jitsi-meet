@@ -825,6 +825,23 @@ TraceablePeerConnection.prototype.close = function() {
 };
 
 /**
+ * Sets the direction of the m-lines of the answer.
+ *
+ * @param {RTCSessionDescription} answer - the answer to modify
+ * @param {String} direction - the direction of the m-lines
+ * @private
+ */
+const _setAnswerDirection = function(answer, direction) {
+
+    const directionAttr = `a=${direction}`;
+
+    answer.sdp = answer.sdp.replace(/a=sendrecv/g, directionAttr);
+    answer.sdp = answer.sdp.replace(/a=recvonly/g, directionAttr);
+    answer.sdp = answer.sdp.replace(/a=inactive/g, directionAttr);
+    answer.sdp = answer.sdp.replace(/a=sendonly/g, directionAttr);
+};
+
+/**
  * Modifies the values of the setup attributes (defined by
  * {@link http://tools.ietf.org/html/rfc4145#section-4}) of a specific SDP
  * answer in order to overcome a delay of 1 second in the connection
@@ -937,6 +954,10 @@ TraceablePeerConnection.prototype.createAnswer
                         dumpSDP(answer));
                 }
 
+                if (this.options.direction) {
+                    _setAnswerDirection(answer, this.options.direction);
+                }
+
                 // Fix the setup attribute (see _fixAnswerRFC4145Setup for
                 //  details)
                 const remoteDescription = new SDP(this.remoteDescription.sdp);
@@ -944,6 +965,10 @@ TraceablePeerConnection.prototype.createAnswer
 
                 _fixAnswerRFC4145Setup(remoteDescription, localDescription);
                 answer.sdp = localDescription.raw;
+
+                if (answer && this.options.direction) {
+                    _setAnswerDirection(answer, this.options.direction);
+                }
 
                 this.eventEmitter.emit(RTCEvents.SENDRECV_STREAMS_CHANGED,
                     extractSSRCMap(answer));
