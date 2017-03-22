@@ -954,8 +954,9 @@ TraceablePeerConnection.prototype.createAnswer
                         dumpSDP(answer));
                 }
 
-                if (this.options.direction) {
-                    _setAnswerDirection(answer, this.options.direction);
+                if (this.options._sdpAnswerDirection) {
+                    _setAnswerDirection(
+                            answer, this.options._sdpAnswerDirection);
                 }
 
                 // Fix the setup attribute (see _fixAnswerRFC4145Setup for
@@ -966,8 +967,9 @@ TraceablePeerConnection.prototype.createAnswer
                 _fixAnswerRFC4145Setup(remoteDescription, localDescription);
                 answer.sdp = localDescription.raw;
 
-                if (answer && this.options.direction) {
-                    _setAnswerDirection(answer, this.options.direction);
+                if (answer && this.options._sdpAnswerDirection) {
+                    _setAnswerDirection(
+                            answer, this.options._sdpAnswerDirection);
                 }
 
                 this.eventEmitter.emit(RTCEvents.SENDRECV_STREAMS_CHANGED,
