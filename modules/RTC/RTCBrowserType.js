@@ -26,6 +26,8 @@ const RTCBrowserType = {
 
     RTC_BROWSER_REACT_NATIVE: 'rtc_browser.react-native',
 
+    RTC_BROWSER_WEBKITGTK: "rtc_browser.webkitgtk",
+
     /**
      * Tells whether or not the <tt>MediaStream/tt> is removed from
      * the <tt>PeerConnection</tt> and disposed on video mute (in order to turn
@@ -105,6 +107,14 @@ const RTCBrowserType = {
      */
     isSafari() {
         return currentBrowser === RTCBrowserType.RTC_BROWSER_SAFARI;
+    },
+
+    /**
+     * Checks if current browser is Safari.
+     * @returns {boolean}
+     */
+    isWebKitGTK: function () {
+        return currentBrowser === RTCBrowserType.RTC_BROWSER_WEBKITGTK;
     },
 
     /**
@@ -296,6 +306,16 @@ function detectSafari() {
     return null;
 }
 
+function detectWebKitGTK() {
+    if ((/^((?!chrome).)*webkitgtk/i.test(navigator.userAgent))) {
+        currentBrowser = RTCBrowserType.RTC_BROWSER_WEBKITGTK;
+        logger.info("This is webkitgtk");
+        console.log("This is webkitgtk");
+        return 1;
+    }
+    return null;
+}
+
 /**
  * Detects IE.
  */
@@ -427,6 +447,7 @@ function detectBrowser() {
         detectOpera,
         detectChrome,
         detectFirefox,
+        detectWebKitGTK,
         detectEdge,
         detectIE,
         detectSafari
