@@ -902,6 +902,26 @@ class RTCUtils extends Listenable {
                             ? id
                             : SDPUtil.filterSpecialChars(id));
                 };
+
+             // Detect WebKitGTK+
+             } else if (RTCBrowserType.isWebKitGTK()) {
+                 //stuff
+                 this.peerconnection = RTCPeerConnection;
+                 var getUserMedia = navigator.webkitGetUserMedia.bind(navigator);
+                 if (navigator.mediaDevices) {
+                     this.getUserMedia = wrapGetUserMedia(getUserMedia);
+                     this.enumerateDevices = wrapEnumerateDevices(
+                         navigator.mediaDevices.enumerateDevices.bind(navigator.mediaDevices)
+                     );
+                 } else {
+                     this.getUserMedia = getUserMedia;
+                     this.enumerateDevices = enumerateDevicesThroughMediaStreamTrack;
+                 }
+                 this.attachMediaStream = wrapAttachMediaStream(function (element, stream) {
+                     defaultSetVideoSrc(element, stream);
+                     return element;
+                 });
+
             } else if (RTCBrowserType.isTemasysPluginUsed()) {
                 // Detect IE/Safari
                 const webRTCReadyCb = () => {
