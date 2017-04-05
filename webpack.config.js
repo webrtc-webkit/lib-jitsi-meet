@@ -4,9 +4,8 @@ const child_process = require('child_process'); // eslint-disable-line camelcase
 const process = require('process');
 const webpack = require('webpack');
 
-const minimize
-    = process.argv.indexOf('-p') !== -1
-        || process.argv.indexOf('--optimize-minimize') !== -1;
+const minimize = false;
+
 const plugins = [];
 
 if (minimize) {
