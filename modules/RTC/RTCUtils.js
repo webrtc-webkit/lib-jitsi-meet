@@ -903,24 +903,28 @@ class RTCUtils extends Listenable {
                             : SDPUtil.filterSpecialChars(id));
                 };
 
-             // Detect WebKitGTK+
-             } else if (RTCBrowserType.isWebKitGTK()) {
-                 //stuff
-                 this.peerconnection = RTCPeerConnection;
-                 var getUserMedia = navigator.webkitGetUserMedia.bind(navigator);
-                 if (navigator.mediaDevices) {
-                     this.getUserMedia = wrapGetUserMedia(getUserMedia);
-                     this.enumerateDevices = wrapEnumerateDevices(
-                         navigator.mediaDevices.enumerateDevices.bind(navigator.mediaDevices)
-                     );
-                 } else {
-                     this.getUserMedia = getUserMedia;
-                     this.enumerateDevices = enumerateDevicesThroughMediaStreamTrack;
-                 }
-                 this.attachMediaStream = wrapAttachMediaStream(function (element, stream) {
-                     defaultSetVideoSrc(element, stream);
-                     return element;
-                 });
+            } else if (RTCBrowserType.isWebKitGTK()) {
+                // Detect WebKitGTK+
+                this.peerconnection = RTCPeerConnection;
+                this.getUserMedia = wrapGetUserMedia(
+                    navigator.mediaDevices.getUserMedia.bind(
+                        navigator.mediaDevices),
+                    true);
+                this.enumerateDevices = wrapEnumerateDevices(
+                        navigator.mediaDevices.enumerateDevices.bind(
+                            navigator.mediaDevices)
+                        );
+                this.attachMediaStream = wrapAttachMediaStream(
+                        (element, stream) => {
+                            if (element) {
+                                defaultSetVideoSrc(element, stream);
+                                if (stream) {
+                                    element.play();
+                                }
+                            }
+
+                            return element;
+                        });
 
             } else if (RTCBrowserType.isTemasysPluginUsed()) {
                 // Detect IE/Safari
