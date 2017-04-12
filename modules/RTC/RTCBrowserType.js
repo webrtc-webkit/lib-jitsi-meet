@@ -26,7 +26,7 @@ const RTCBrowserType = {
 
     RTC_BROWSER_REACT_NATIVE: 'rtc_browser.react-native',
 
-    RTC_BROWSER_WEBKITGTK: "rtc_browser.webkitgtk",
+    RTC_BROWSER_WEBKITGTK: 'rtc_browser.webkitgtk',
 
     /**
      * Tells whether or not the <tt>MediaStream/tt> is removed from
@@ -113,7 +113,7 @@ const RTCBrowserType = {
      * Checks if current browser is Safari.
      * @returns {boolean}
      */
-    isWebKitGTK: function () {
+    isWebKitGTK() {
         return currentBrowser === RTCBrowserType.RTC_BROWSER_WEBKITGTK;
     },
 
@@ -306,13 +306,19 @@ function detectSafari() {
     return null;
 }
 
+/**
+ * Detects WebKitGTK+ or any other WebKit-based browser which uses OpenWebRTC
+ * as backend.
+ */
 function detectWebKitGTK() {
-    if ((/^((?!chrome).)*webkitgtk/i.test(navigator.userAgent))) {
+    if (/^((?!chrome).)*(webkitgtk|owr)/i.test(navigator.userAgent)) {
         currentBrowser = RTCBrowserType.RTC_BROWSER_WEBKITGTK;
-        logger.info("This is webkitgtk");
-        console.log("This is webkitgtk");
+        logger.info('This appears to be WebKitGTK+ or a WebKit-based '
+                + 'browser using OpenWebRTC as backend');
+
         return 1;
     }
+
     return null;
 }
 
