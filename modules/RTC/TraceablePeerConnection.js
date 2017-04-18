@@ -161,6 +161,8 @@ export default function TraceablePeerConnection(
         RTCPeerConnectionType = RTCPeerConnection;
     } else if (RTCBrowserType.isTemasysPluginUsed()) {
         RTCPeerConnectionType = RTCPeerConnection;
+    } else if (RTCBrowserType.isWebKitGTK()) {
+        RTCPeerConnectionType = RTCPeerConnection;
     } else {
         RTCPeerConnectionType = webkitRTCPeerConnection;
     }
