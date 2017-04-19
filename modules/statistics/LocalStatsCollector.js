@@ -145,5 +145,6 @@ LocalStatsCollector.prototype.stop = function() {
  * @returns {boolean}
  */
 LocalStatsCollector.isLocalStatsSupported = function() {
-    return Boolean(context && !RTCBrowserType.isTemasysPluginUsed());
+    return Boolean(context && !RTCBrowserType.isTemasysPluginUsed()
+            && !RTCBrowserType.isWebKitGTK());
 };

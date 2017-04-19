@@ -36,7 +36,8 @@ const RTCBrowserType = {
      * strategy or <tt>false</tt> otherwise.
      */
     doesVideoMuteByStreamRemove() {
-        return !RTCBrowserType.isFirefox();
+        return !RTCBrowserType.isFirefox()
+            && !RTCBrowserType.isWebKitGTK();
     },
 
     /**
@@ -214,7 +215,7 @@ const RTCBrowserType = {
     },
 
     usesUnifiedPlan() {
-        return RTCBrowserType.isFirefox();
+        return RTCBrowserType.isFirefox() || RTCBrowserType.isWebKitGTK();
     },
 
     /**

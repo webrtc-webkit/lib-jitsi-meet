@@ -80,7 +80,8 @@ const JitsiMediaDevices = {
      * @returns {boolean}
      */
     isMultipleAudioInputSupported() {
-        return !RTCBrowserType.isFirefox();
+        return !RTCBrowserType.isFirefox()
+            && !RTCBrowserType.isWebKitGTK();
     },
 
     /**

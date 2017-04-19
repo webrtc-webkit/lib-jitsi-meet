@@ -165,6 +165,7 @@ function getConstraints(um, options) {
     // @see https://github.com/jitsi/lib-jitsi-meet/pull/136
     const isNewStyleConstraintsSupported
         = RTCBrowserType.isFirefox()
+        || RTCBrowserType.isWebKitGTK()
         || RTCBrowserType.isEdge()
         || RTCBrowserType.isReactNative()
         || RTCBrowserType.isTemasysPluginUsed();

@@ -63,7 +63,8 @@ export default function JitsiLocalTrack(
 
     // FIXME: currently firefox is ignoring our constraints about resolutions
     // so we do not store it, to avoid wrong reporting of local track resolution
-    if (RTCBrowserType.isFirefox()) {
+    // FIXME: WebKit+OWR currently is also ignoring constraints.
+    if (RTCBrowserType.isFirefox() || RTCBrowserType.isWebKitGTK()) {
         this.resolution = null;
     }
 
