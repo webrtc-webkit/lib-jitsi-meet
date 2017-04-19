@@ -490,7 +490,7 @@ TraceablePeerConnection.prototype._remoteStreamAdded = function(stream) {
 
     // Bind 'addtrack'/'removetrack' event handlers
     if (RTCBrowserType.isChrome() || RTCBrowserType.isNWJS()
-        || RTCBrowserType.isElectron()) {
+        || RTCBrowserType.isElectron() || RTCBrowserType.isWebKitGTK()) {
         stream.onaddtrack = event => {
             this._remoteTrackAdded(event.target, event.track);
         };
@@ -1159,7 +1159,7 @@ TraceablePeerConnection.prototype._addStream = function(mediaStream) {
  * @param {MediaStream} mediaStream
  */
 TraceablePeerConnection.prototype._removeStream = function(mediaStream) {
-    if (RTCBrowserType.isFirefox()) {
+    if (RTCBrowserType.usesUnifiedPlan()) {
         this._handleFirefoxRemoveStream(mediaStream);
     } else {
         this.peerconnection.removeStream(mediaStream);
@@ -1211,7 +1211,7 @@ TraceablePeerConnection.prototype.removeTrack = function(localTrack) {
     this.localSSRCs.delete(localTrack.rtcId);
 
     if (webRtcStream) {
-        if (RTCBrowserType.isFirefox()) {
+        if (RTCBrowserType.usesUnifiedPlan()) {
             this._handleFirefoxRemoveStream(webRtcStream);
         } else {
             this.peerconnection.removeStream(webRtcStream);
@@ -1643,7 +1643,7 @@ TraceablePeerConnection.prototype._createOfferOrAnswer
              *  after that, when we try and go back to unified plan it will
              *  complain about unmapped ssrcs)
              */
-            if (!RTCBrowserType.isFirefox()) {
+            if (!RTCBrowserType.usesUnifiedPlan()) {
                 // If there are no local video tracks, then a "recvonly"
                 // SSRC needs to be generated
                 if (!this.hasAnyTracksOfType(MediaType.VIDEO)
@@ -1821,6 +1821,9 @@ TraceablePeerConnection.prototype.getStats = function(callback, errback) {
                 // Making sure that getStats won't fail if error callback is
                 // not passed.
             }));
+    } else if (RTCBrowserType.isWebKitGTK()) {
+        // WebKit uses the new API which returns a Promise<RTCStatsReport>.
+        this.peerconnection.getStats(null).then(callback, errback);
     } else {
         this.peerconnection.getStats(callback);
     }
