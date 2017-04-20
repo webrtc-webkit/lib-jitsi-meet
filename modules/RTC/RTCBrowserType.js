@@ -231,6 +231,10 @@ const RTCBrowserType = {
 
     supportsRtx() {
         return !RTCBrowserType.isFirefox();
+    },
+
+    supportsDataChannel() {
+        return !RTCBrowserType.isWebKitGTK();
     }
 
     // Add version getters for other browsers when needed
