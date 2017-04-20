@@ -11,6 +11,7 @@ import * as JitsiTrackErrors from '../../JitsiTrackErrors';
 import Listenable from '../util/Listenable';
 import * as MediaType from '../../service/RTC/MediaType';
 import RTCEvents from '../../service/RTC/RTCEvents';
+import RTCBrowsertType from './RTCBrowserType';
 import RTCUtils from './RTCUtils';
 import TraceablePeerConnection from './TraceablePeerConnection';
 import VideoType from '../../service/RTC/VideoType';
@@ -153,6 +154,11 @@ export default class RTC extends Listenable {
      * @param peerconnection the associated PeerConnection.
      */
     initializeDataChannels(peerconnection) {
+        if (!RTCBrowsertType.supportsDataChannel()) {
+            logger.warn('No DataChannel support, disabling "openSctp"');
+            this.options.config.openSctp = false;
+        }
+
         if (this.options.config.openSctp) {
             this.dataChannels = new DataChannels(peerconnection,
                 this.eventEmitter);
