@@ -926,6 +926,20 @@ class RTCUtils extends Listenable {
 
                             return element;
                         });
+                this.getStreamID = function(stream) {
+                    let id = stream.id;
+
+                    if (!id) {
+                        let tracks = stream.getVideoTracks();
+
+                        if (!tracks || tracks.length === 0) {
+                            tracks = stream.getAudioTracks();
+                        }
+                        id = tracks[0].id;
+                    }
+
+                    return SDPUtil.filterSpecialChars(id);
+                };
 
             } else if (RTCBrowserType.isTemasysPluginUsed()) {
                 // Detect IE/Safari
@@ -1100,7 +1114,8 @@ class RTCUtils extends Listenable {
                     // and instead has a single constructor which expects (an
                     // NSNumber as) a MediaStream ID.
                     || RTCBrowserType.isReactNative()
-                    || RTCBrowserType.isTemasysPluginUsed()) {
+                    || RTCBrowserType.isTemasysPluginUsed()
+                    || RTCBrowserType.isWebKitGTK()) {
                 const GUM = function(device, s, e) {
                     this.getUserMediaWithConstraints(device, s, e, options);
                 };
