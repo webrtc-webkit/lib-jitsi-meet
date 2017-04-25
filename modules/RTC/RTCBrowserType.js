@@ -320,7 +320,7 @@ function detectSafari() {
  * as backend.
  */
 function detectWebKitGTK() {
-    if (/^((?!chrome).)*(webkitgtk|owr)/i.test(navigator.userAgent)) {
+    if (/^((?!chrome).)*(webkitgtk|owr|wpe)/i.test(navigator.userAgent)) {
         currentBrowser = RTCBrowserType.RTC_BROWSER_WEBKITGTK;
         logger.info('This appears to be WebKitGTK+ or a WebKit-based '
                 + 'browser using OpenWebRTC as backend');
