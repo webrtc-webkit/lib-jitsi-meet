@@ -215,7 +215,7 @@ const RTCBrowserType = {
     },
 
     usesUnifiedPlan() {
-        return RTCBrowserType.isFirefox() || RTCBrowserType.isWebKitGTK();
+        return RTCBrowserType.isFirefox();
     },
 
     /**
