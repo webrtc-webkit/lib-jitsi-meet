@@ -927,18 +927,12 @@ class RTCUtils extends Listenable {
                             return element;
                         });
                 this.getStreamID = function(stream) {
-                    let id = stream.id;
+                    const id = stream.id;
 
-                    if (!id) {
-                        let tracks = stream.getVideoTracks();
-
-                        if (!tracks || tracks.length === 0) {
-                            tracks = stream.getAudioTracks();
-                        }
-                        id = tracks[0].id;
-                    }
-
-                    return SDPUtil.filterSpecialChars(id);
+                    return (
+                        typeof id === 'number'
+                            ? id
+                            : SDPUtil.filterSpecialChars(id));
                 };
 
             } else if (RTCBrowserType.isTemasysPluginUsed()) {
@@ -1114,8 +1108,7 @@ class RTCUtils extends Listenable {
                     // and instead has a single constructor which expects (an
                     // NSNumber as) a MediaStream ID.
                     || RTCBrowserType.isReactNative()
-                    || RTCBrowserType.isTemasysPluginUsed()
-                    || RTCBrowserType.isWebKitGTK()) {
+                    || RTCBrowserType.isTemasysPluginUsed()) {
                 const GUM = function(device, s, e) {
                     this.getUserMediaWithConstraints(device, s, e, options);
                 };
