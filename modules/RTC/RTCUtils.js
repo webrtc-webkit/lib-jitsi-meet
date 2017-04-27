@@ -914,18 +914,15 @@ class RTCUtils extends Listenable {
                 this.enumerateDevices = wrapEnumerateDevices(
                         navigator.mediaDevices.enumerateDevices.bind(
                             navigator.mediaDevices)
-                        );
-                this.attachMediaStream = wrapAttachMediaStream(
-                        (element, stream) => {
-                            if (element) {
-                                defaultSetVideoSrc(element, stream);
-                                if (stream) {
-                                    element.play();
-                                }
-                            }
+                );
 
-                            return element;
-                        });
+                this.attachMediaStream
+                    = wrapAttachMediaStream((element, stream) => {
+                        defaultSetVideoSrc(element, stream);
+
+                        return element;
+                    });
+
                 this.getStreamID = function(stream) {
                     const id = stream.id;
 
