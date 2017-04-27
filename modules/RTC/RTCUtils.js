@@ -906,7 +906,7 @@ class RTCUtils extends Listenable {
 
             } else if (RTCBrowserType.isWebKitGTK()) {
                 // Detect WebKitGTK+
-                this.peerconnection = RTCPeerConnection;
+                this.RTCPeerConnectionType = RTCPeerConnection;
                 this.getUserMedia = wrapGetUserMedia(
                     navigator.mediaDevices.getUserMedia.bind(
                         navigator.mediaDevices),
