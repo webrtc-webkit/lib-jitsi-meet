@@ -15,7 +15,7 @@ const logger = getLogger(__filename);
  *
  * @type {number}
  */
-const DEFAULT_RTC_MUTE_TIMEOUT = 2000;
+const DEFAULT_RTC_MUTE_TIMEOUT = 20000;
 
 /**
  * The time to wait a track to be restored. Track which was out of lastN
@@ -25,7 +25,7 @@ const DEFAULT_RTC_MUTE_TIMEOUT = 2000;
  * interrupted.
  * @type {number}
  */
-const DEFAULT_RESTORING_TIMEOUT = 5000;
+const DEFAULT_RESTORING_TIMEOUT = 50000;
 
 /**
  * Participant connection statuses.
