@@ -344,10 +344,6 @@ JitsiTrack.prototype.getId = function() {
  * @returns {boolean} whether MediaStream is active.
  */
 JitsiTrack.prototype.isActive = function() {
-    if (typeof this.stream.active !== 'undefined') {
-        return this.stream.active;
-    }
-
     return true;
 
 };
