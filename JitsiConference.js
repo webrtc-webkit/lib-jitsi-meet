@@ -1315,7 +1315,7 @@ JitsiConference.prototype.onIncomingCall
         this.statistics.startCallStats(
             this.jvbJingleSession.peerconnection,
             'jitsi' /* Remote user ID for JVB is 'jitsi' */);
-        this._startRemoteStats();
+//        this._startRemoteStats();
     } catch (e) {
         GlobalOnErrorHandler.callErrorHandler(e);
         logger.error(e);
@@ -1379,7 +1379,7 @@ JitsiConference.prototype._startRemoteStats = function() {
     const activePeerConnection = this.getActivePeerConnection();
 
     if (activePeerConnection) {
-        this.statistics.startRemoteStats(activePeerConnection);
+//        this.statistics.startRemoteStats(activePeerConnection);
     }
 };
 
@@ -1858,7 +1858,7 @@ JitsiConference.prototype._onIceConnectionFailed = function(session) {
         if (this.p2pJingleSession && this.p2pJingleSession.isInitiator) {
             Statistics.sendEventToAll('p2p.failed');
         }
-        this._stopP2PSession('connectivity-error', 'ICE FAILED');
+//        this._stopP2PSession('connectivity-error', 'ICE FAILED');
     }
 };
 
@@ -1971,7 +1971,7 @@ JitsiConference.prototype._onIceConnectionEstablished
 
     // Remove remote tracks
     if (this.jvbJingleSession) {
-        this._removeRemoteJVBTracks();
+  //      this._removeRemoteJVBTracks();
     } else {
         logger.info('Not removing remote JVB tracks - no session yet');
     }
@@ -1980,13 +1980,13 @@ JitsiConference.prototype._onIceConnectionEstablished
     this._addRemoteP2PTracks();
 
     // Stop media transfer over the JVB connection
-    if (this.jvbJingleSession) {
-        this._suspendMediaTransferForJvbConnection();
-    }
+//    if (this.jvbJingleSession) {
+//        this._suspendMediaTransferForJvbConnection();
+//    }
 
     // Start remote stats
-    logger.info('Starting remote stats with p2p connection');
-    this._startRemoteStats();
+//    logger.info('Starting remote stats with p2p connection');
+//    this._startRemoteStats();
 
     // Log the P2P established event
     if (this.p2pJingleSession.isInitiator) {
@@ -2079,10 +2079,10 @@ JitsiConference.prototype._setP2PStatus = function(newStatus) {
     }
 
     // Put the JVB connection on hold/resume
-    if (this.jvbJingleSession) {
-        this.statistics.sendConnectionResumeOrHoldEvent(
-            this.jvbJingleSession.peerconnection, !newStatus);
-    }
+//    if (this.jvbJingleSession) {
+//        this.statistics.sendConnectionResumeOrHoldEvent(
+//            this.jvbJingleSession.peerconnection, !newStatus);
+//    }
 
     // Clear dtmfManager, so that it can be recreated with new connection
     this.dtmfManager = null;
@@ -2298,7 +2298,7 @@ JitsiConference.prototype._stopP2PSession
     // Start remote stats
     logger.info('Starting remote stats with JVB connection');
     if (this.jvbJingleSession) {
-        this._startRemoteStats();
+//        this._startRemoteStats();
     }
 };
 
