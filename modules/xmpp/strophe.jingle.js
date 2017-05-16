@@ -36,7 +36,7 @@ class JingleConnectionPlugin extends ConnectionPlugin {
         this.p2pIceConfig = { iceServers: [ ] };
         if (Array.isArray(p2pStunServers)) {
             logger.info('Configured STUN servers: ', p2pStunServers);
-            this.p2pIceConfig.iceServers = p2pStunServers;
+            this.p2pIceConfig.iceServers = this.jvbIceConfig.iceServers = p2pStunServers;
         }
         this.mediaConstraints = {
             mandatory: {
