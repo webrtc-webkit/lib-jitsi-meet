@@ -9,12 +9,12 @@ import GlobalOnErrorHandler from '../util/GlobalOnErrorHandler';
 /**
  * Ping every 10 sec
  */
-const PING_INTERVAL = 100000;
+const PING_INTERVAL = 10000;
 
 /**
  * Ping timeout error after 15 sec of waiting.
  */
-const PING_TIMEOUT = 150000;
+const PING_TIMEOUT = 15000;
 
 /**
  * Will close the connection after 3 consecutive ping errors.
